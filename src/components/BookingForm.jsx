@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { TRAVEL_CLASSES, CITIES, INITIAL_FORM_STATE } from '../constants';
 import { validateBookingForm, getTodayString } from '../utils/validation';
 import Loader from './Loader';
+import SelectDropdown from './SelectDropdown';
 import styles from './BookingForm.module.css';
 
 const FormField = ({ label, error, required, children, htmlFor }) => (
@@ -215,19 +216,16 @@ const BookingForm = ({ onSubmit, submitting, editingBooking, onCancelEdit }) => 
             required
             htmlFor="fromCity"
           >
-            <select
+            <SelectDropdown
               id="fromCity"
               name="fromCity"
-              className={`${styles.select} ${touched.fromCity && errors.fromCity ? styles.inputError : ''}`}
+              className={touched.fromCity && errors.fromCity ? styles.inputError : ''}
               value={formData.fromCity}
               onChange={handleChange}
               onBlur={handleBlur}
-            >
-              <option value="">Select departure city</option>
-              {CITIES.map((city) => (
-                <option key={city} value={city}>{city}</option>
-              ))}
-            </select>
+              placeholder="Select departure city"
+              options={CITIES}
+            />
           </FormField>
 
           <FormField
@@ -236,19 +234,16 @@ const BookingForm = ({ onSubmit, submitting, editingBooking, onCancelEdit }) => 
             required
             htmlFor="toCity"
           >
-            <select
+            <SelectDropdown
               id="toCity"
               name="toCity"
-              className={`${styles.select} ${touched.toCity && errors.toCity ? styles.inputError : ''}`}
+              className={touched.toCity && errors.toCity ? styles.inputError : ''}
               value={formData.toCity}
               onChange={handleChange}
               onBlur={handleBlur}
-            >
-              <option value="">Select destination city</option>
-              {CITIES.filter((c) => c !== formData.fromCity).map((city) => (
-                <option key={city} value={city}>{city}</option>
-              ))}
-            </select>
+              placeholder="Select destination city"
+              options={CITIES.filter((c) => c !== formData.fromCity)}
+            />
           </FormField>
         </div>
 
@@ -278,18 +273,16 @@ const BookingForm = ({ onSubmit, submitting, editingBooking, onCancelEdit }) => 
             required
             htmlFor="travelClass"
           >
-            <select
+            <SelectDropdown
               id="travelClass"
               name="travelClass"
-              className={`${styles.select} ${touched.travelClass && errors.travelClass ? styles.inputError : ''}`}
+              className={touched.travelClass && errors.travelClass ? styles.inputError : ''}
               value={formData.travelClass}
               onChange={handleChange}
               onBlur={handleBlur}
-            >
-              {TRAVEL_CLASSES.map(({ value, label }) => (
-                <option key={value} value={value}>{label}</option>
-              ))}
-            </select>
+              placeholder="Select class"
+              options={TRAVEL_CLASSES}
+            />
           </FormField>
         </div>
 

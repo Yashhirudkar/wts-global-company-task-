@@ -1,0 +1,208 @@
+/* ── Wrapper ── */
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Trigger button (looks like a styled input) ── */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: var(--font);
+  color: var(--color-text);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  line-height: 1.5;
+  gap: 0.5rem;
+  min-height: 38px;
+}
+
+.trigger:hover:not(:disabled) {
+  border-color: #c5cad4;
+}
+
+.open .trigger,
+.trigger:focus-visible {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(39, 70, 144, 0.08);
+  outline: none;
+}
+
+.trigger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Placeholder style */
+.placeholder .triggerText {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.triggerText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Error border passed from parent */
+.trigger.inputError {
+  border-color: #e07070 !important;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.06) !important;
+}
+
+/* ── Chevron ── */
+.chevron {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  transition: transform 0.18s ease;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown panel ──
+   z-index 400 > navbar (100) so it always floats on top
+   Uses fixed positioning on mobile to break out of any
+   overflow:hidden ancestor.
+── */
+.panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 400;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+  animation: dropIn 0.14s ease;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Search box ── */
+.searchWrap {
+  padding: 0.5rem 0.5rem 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-section);
+}
+
+.search {
+  width: 100%;
+  padding: 0.42rem 0.65rem;
+  font-size: 0.82rem;
+  font-family: var(--font);
+  color: var(--color-text);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.search:focus {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 2px rgba(39, 70, 144, 0.08);
+}
+
+/* ── Options list ── */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0;
+  max-height: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.list::-webkit-scrollbar { width: 4px; }
+.list::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+/* ── Single option ── */
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.1s;
+  user-select: none;
+}
+
+.option:hover {
+  background: var(--color-bg-section);
+}
+
+.selected {
+  color: var(--color-primary);
+  font-weight: 600;
+  background: var(--color-primary-light);
+}
+
+.selected:hover {
+  background: #dce3f5;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.noResults {
+  padding: 0.75rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .trigger {
+    font-size: 1rem; /* prevent iOS zoom on focus */
+    padding: 0.65rem 0.75rem;
+    min-height: 44px;
+  }
+
+  .panel {
+    /* Wider shadow for touch devices */
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18);
+  }
+
+  .list {
+    max-height: 200px;
+  }
+
+  .option {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.92rem;
+    min-height: 42px; /* bigger touch target */
+  }
+
+  .search {
+    font-size: 1rem;
+    padding: 0.5rem 0.65rem;
+  }
+}
