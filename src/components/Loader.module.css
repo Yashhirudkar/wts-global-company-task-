@@ -1,0 +1,63 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.spinner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spinner.small {
+  width: 16px;
+  height: 16px;
+}
+
+.spinner.medium {
+  width: 32px;
+  height: 32px;
+}
+
+.spinner.large {
+  width: 40px;
+  height: 40px;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner.small .ring {
+  border-width: 2px;
+}
+
+.spinner.medium .ring,
+.spinner.large .ring {
+  border-width: 2px;
+}
+
+/* Only one ring for clean minimal look */
+.ring:nth-child(2),
+.ring:nth-child(3) {
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.label {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
